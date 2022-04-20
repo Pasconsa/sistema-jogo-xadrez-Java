@@ -1,15 +1,18 @@
 package application;
 
+import boardgame.Board;
 import boardgame.Position;
+import chess.ChessMatch;
 
 public class Program {
 
 	public static void main(String[] args) {
 		
-		Position pos = new Position(3, 5);
+//04 intanciar uma partida e imprimir o tabuleiro
+		//UI.printboard recebe a matriz de peças da partida
 		
-		System.out.println(pos);
-
+		ChessMatch chessMatch = new ChessMatch();
+		UI.printBoard(chessMatch.getPieces());
 	}
 
 }
