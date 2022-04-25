@@ -2,8 +2,9 @@ package chess;
 
 import boardgame.Board;
 import boardgame.Piece;
+import boardgame.Position;
 
-public class ChessPiece extends Piece {
+public abstract class ChessPiece extends Piece {
 
 	private Color color;
 
@@ -18,7 +19,11 @@ public class ChessPiece extends Piece {
 		return color;
 	}
 
-	
+//12.1 se existe uma peça adversaria na posição
+	protected boolean isThereOpponentPiece(Position position) {
+		ChessPiece p = (ChessPiece)getBoard().piece(position);
+		return p != null  &&  p.getColor() != color;
+	}
 	
 	
 }
