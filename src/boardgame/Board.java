@@ -57,6 +57,22 @@ public class Board {
 		piece.position = position;
 	}
 	
+//09.1 metodo removepiece ; lancar uma excessão caso não exista
+	public Piece removePiece(Position position) {
+		if (!positionExists(position)) {
+			throw new BoardException ("Position not on the board");
+		}
+		if (piece(position) == null) { //se a peça estiver em um lugar nulo retorne nulo
+			return null;
+		} 
+		Piece aux = piece(position);       //senão acontecer retirar a peça do tabuleiro
+		aux.position = null;
+		pieces[position.getRow()][position.getColumn()] = null; // na matriz  da peça onde removo a peça vai ser nulo não tem mais peça
+		return aux;
+	}
+		
+		
+		
 	//06.2
 		//condições completas para ver se aposição existe
 			
