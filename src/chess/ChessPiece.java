@@ -4,12 +4,12 @@ import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 
-public abstract class ChessPiece extends Piece {
+public abstract class ChessPiece extends Piece { //chess piece è uma peça
 
 	private Color color;
 
 	
-	public ChessPiece(Board board, Color color) {
+	public ChessPiece(Board board, Color color) {  //construtor foi herdado da class piece
 		super(board);
 		this.color = color;
 	}
