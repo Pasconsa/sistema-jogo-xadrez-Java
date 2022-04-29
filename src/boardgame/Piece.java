@@ -3,16 +3,16 @@ package boardgame;
 public abstract class Piece {
 
 	protected Position position;
-	private Board board;
+	private Board board;            //03.1 As peças associa com 1 tabuleiro
 	
 	
-	public Piece(Board board) {
+	public Piece(Board board) {    //03.1 construtor peça no tabuleiro
 		this.board = board;
 		position = null; //posição da peça inicia no zero
 	}
 
 
-	protected Board getBoard() { //set board foi apagado pois este não sera alterado
+	protected Board getBoard() { //03.1 set board foi apagado pois este não sera alterado
 		return board;          		//protected pois esse tabuleiro é apenas uso camada tabuleiro
 	}
 
