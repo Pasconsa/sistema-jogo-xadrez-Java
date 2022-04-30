@@ -6,14 +6,14 @@ public class Board {
 	private int columns;
 	private Piece[] [] pieces;   //matrizes de peças
 	
-	
+	//03.2 construtor
 	public Board(int rows, int columns) {
 		if(rows <1 || columns <1) {   // 6.3 aplicação de exception
 			throw new BoardException ("Error creating board: there must be at least 1 row and 1 column");
 		}
 		this.rows = rows;
 		this.columns = columns;
-		pieces = new Piece [rows] [columns];  //matriz de peças será instanciada com piece na quntidade
+		pieces = new Piece [rows] [columns];  //03.2 matriz de peças será instanciada com piece na quntidade
 												//coluna e linha informada
 	}
 
@@ -31,10 +31,11 @@ public class Board {
 
 	
 	
-	//04 camadas //06.3 exception se esse posição não existir no tabuleiro
+	//04.1 Construtor = retornando objeto Piece e o nome é piece que recebe row e column.
+			//retorna matriz pieces em row column
 	public Piece piece (int row, int column) {
 		if (!positionExists(row, column)) {
-			throw new BoardException ("Position not on the board");
+			throw new BoardException ("Position not on the board"); //06.3 exception se esse posição não existir no tabuleiro
 		}
 		return pieces[row][column];
 	}
