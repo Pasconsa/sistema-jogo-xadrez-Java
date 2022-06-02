@@ -10,13 +10,29 @@ import chess.pieces.Rook;
 		//nesta classe que vai dizer a dimensão que vai ser 8 por 8
 public class ChessMatch { 
 
+//15.1.1 criar atibutos turn current player e seus get seter	
+	private int turn;
+	private Color currentPlayer;
 	private Board board; //partida precisa do tabuleiro
 	
 	public ChessMatch() {
 		board = new Board(8, 8);
+		turn = 1;
+		currentPlayer = Color.white;
 		initialSetup();
 	}
 	
+	
+	public int getTurn() {
+		return turn;
+	}
+
+	public Color getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+
+
 	public ChessPiece[][] getPieces(){  //retorna uma matriz de peças de xadrez corresponde essa partida
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()]; //quantidade de linha e colunas do tabuleiro
 		for (int i=0 ; i < board.getRows(); i++) {
@@ -44,6 +60,7 @@ public class ChessMatch {
 	//12.3	
 		validateSourcePosition(source, target);
 		Piece capturedPiece = makeMove(source , target);
+		nextTurn();
 		return (ChessPiece)capturedPiece;
 		
 	}
@@ -52,7 +69,13 @@ public class ChessMatch {
 	private void validateSourcePosition(Position position) {
 		if (!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece on source position");
-		}	//11.3 senão existe movientos possiveis não posso usar como origem
+		}	
+			//15.1.2
+		if (currentPlayer != ((ChessPiece)board.piece(position)).getColor()) {
+			throw new ChessException("The chosen piece is not yours");
+		}
+			
+			//11.3 senão existe movientos possiveis não posso usar como origem
 		if (!board.piece(position).isThereAnyPossibleMove() ) {
 			throw new ChessException("There is no possible movers for the chosen pieces.");
 			
@@ -75,6 +98,12 @@ public class ChessMatch {
 		if(!board.piece(source).possibleMove(target)) {
 			throw new ChessException("The chosen piece can t move to target possible");
 		}
+	}
+	
+	//15.1.2 mETODO NEXT TURN
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.white) ? Color.black : Color.white;
 	}
 	
 	//7.3 metodo recebe as coordenadas do xadrez
