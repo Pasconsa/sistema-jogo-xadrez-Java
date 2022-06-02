@@ -26,6 +26,13 @@ public class ChessMatch {
 		}return mat;
 	}
 	
+	//13.1 aplicação colorir imprimir as posições possiveis de uma posição de origem
+	public boolean[][] possibleMoves(ChessPosition sourcePosition){
+		Position position = sourcePosition.toposition();
+		validateSourcePosition(position);
+		return board.piece(position).possibleMoves();
+	}
+	
 	//9.3.1 movimento peça posição de origem = source pra target = destino
 			//converter as duas posições para a matriz
 			//validar a posição de origem

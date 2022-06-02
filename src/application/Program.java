@@ -26,9 +26,14 @@ public class Program {
 				System.out.print("Source: ");
 				ChessPosition source = UI.readChessPosition(sc);
 				
-				System.out.println();
-				System.out.print("target: ");
-				ChessPosition target = UI.readChessPosition(sc);
+//13.2.1	Imprimir o tabuleiro e colorindo as posições possiveis			
+			boolean[][] possibleMoves =chessMatch.possibleMoves(source);
+			UI.clearScreen();
+			UI.printBoard(chessMatch.getPieces(),possibleMoves);
+	//04	
+			System.out.println();
+			System.out.print("target: ");
+			ChessPosition target = UI.readChessPosition(sc);
 				
 				ChessPiece capturedPiece = chessMatch.performChessMove(source , target );
 			}

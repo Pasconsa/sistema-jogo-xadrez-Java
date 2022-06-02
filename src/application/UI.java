@@ -59,7 +59,19 @@ public class UI {
 		for (int i=0; i<pieces.length; i++) {
 			System.out.print((8-i) + " ");      //imprimir na tabela 8 a 1 linhas
 			for (int j=0; j<pieces.length; j++) {
-				printPiece(pieces[i][j]);        //colocar a peça na posição i e j
+				printPiece(pieces[i][j],false);        //colocar a peça na posição i e j
+			}
+			System.out.println();  //quebra linha do tabuleiro
+		}
+		System.out.println("  a b c d e f g h");  //imprimindo as colunas
+	}
+	
+//13.2.2 recebe as matrizes de movimentos possiveis
+	public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
+		for (int i=0; i<pieces.length; i++) {
+			System.out.print((8-i) + " ");      //imprimir na tabela 8 a 1 linhas
+			for (int j=0; j<pieces.length; j++) {
+				printPiece(pieces[i][j], possibleMoves[i][j]);        //colocar a peça na posição i e j
 			}
 			System.out.println();  //quebra linha do tabuleiro
 		}
@@ -74,9 +86,13 @@ public class UI {
 	        -caso contrario imprimo peça
 	        - espaço em branco peças nao colarem */
 	
-	private static void printPiece(ChessPiece piece) {
-    	if (piece == null) {
-            System.out.print("-");
+	private static void printPiece(ChessPiece piece, boolean background) { //13.2.3 variavel colorir o fundo da peça
+    	if(background) {
+    		 System.out.print(ANSI_BLUE_BACKGROUND);
+    	}
+		
+		if (piece == null) {
+            System.out.print("-"+ ANSI_RESET);
         }
         else {
             if (piece.getColor() == Color.white) {
