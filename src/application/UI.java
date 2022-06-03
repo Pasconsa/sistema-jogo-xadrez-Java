@@ -79,8 +79,9 @@ public class UI {
 		System.out.println("Turn : " + chessMatch.getTurn());
 		if(!chessMatch.getCheckMate()) {  //18.2
 			System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+			//17.2.6
 			if (chessMatch.getCheck()) {
-				System.out.println("CHECK!");   //17.2.6
+				System.out.println("CHECK!");   
 			}
 		}
 			else {
