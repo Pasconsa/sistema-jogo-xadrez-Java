@@ -7,6 +7,7 @@ import boardgame.Position;
 public abstract class ChessPiece extends Piece { //chess piece è uma peça
 
 	private Color color;
+	private int moveCount;
 
 	
 	public ChessPiece(Board board, Color color) {  //construtor foi herdado da class piece
@@ -17,6 +18,19 @@ public abstract class ChessPiece extends Piece { //chess piece è uma peça
 
 	public Color getColor() { //não gerado set para cor não ser alterada
 		return color;
+	}
+	
+	//19.1
+	public int getMoveCount() {
+		return moveCount;
+	}
+	
+	public void increaseMoveCount() {
+		moveCount++;
+	}
+	
+	public void decreaseMoveCount() {
+		moveCount--;
 	}
 	
 	//17.1
