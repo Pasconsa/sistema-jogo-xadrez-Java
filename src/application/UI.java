@@ -77,11 +77,20 @@ public class UI {
 		printCapturedPieces(captured);
 		System.out.println();
 		System.out.println("Turn : " + chessMatch.getTurn());
-		System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
-		if (chessMatch.getCheck()) {
-			System.out.println("CHECK!");   //17.2.6
+		if(!chessMatch.getCheckMate()) {  //18.2
+			System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+			if (chessMatch.getCheck()) {
+				System.out.println("CHECK!");   //17.2.6
+			}
 		}
+			else {
+				System.out.println("CHECKMATE!");
+				System.out.println("Winner: " + chessMatch.getCurrentPlayer());
+			
+			}
 	}
+	
+
 	
 //13.2.2 recebe as matrizes de movimentos possiveis
 	public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {

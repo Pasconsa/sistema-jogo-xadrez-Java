@@ -21,7 +21,7 @@ public class Program {
 		ChessMatch chessMatch = new ChessMatch();
 		List<ChessPiece> captured = new ArrayList<>();  //16.1
 		
-		while (true) {
+		while (!chessMatch.getCheckMate()) {
 			try {
 				UI.clearScreen();  //10
 				UI.printMatch(chessMatch, captured);
@@ -53,7 +53,8 @@ public class Program {
 			}
 			
 		}
-		
+		UI.clearScreen();
+		UI.printMatch(chessMatch,  captured);
 		
 	}
 

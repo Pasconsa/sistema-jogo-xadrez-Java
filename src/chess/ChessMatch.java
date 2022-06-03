@@ -19,6 +19,7 @@ public class ChessMatch {
 	private Color currentPlayer;
 	private Board board; //partida precisa do tabuleiro
 	private boolean check;  //17.2.2
+	private boolean checkMate; //18.1.1
 	
 //16.4.1
 	private List <Piece> piecesOnTheBoard = new ArrayList<>();
@@ -43,6 +44,11 @@ public class ChessMatch {
 	public boolean getCheck() {
 		return check;
 	}
+	
+	public boolean getCheckMate() {
+		return checkMate;
+	}
+	
 
 	public ChessPiece[][] getPieces(){  //retorna uma matriz de peças de xadrez corresponde essa partida
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()]; //quantidade de linha e colunas do tabuleiro
@@ -78,8 +84,14 @@ public class ChessMatch {
 			throw new ChessException("You can't put yourself in check");
 		}
 		check = (testCheck(opponent(currentPlayer))) ? true : false ;
-		
+	//18.1.3	
+		if(testCheckMate(opponent(currentPlayer))) {
+			checkMate = true;
+	}
+	else {
 		nextTurn();
+	}
+		
 		return (ChessPiece)capturedPiece;
 		
 	}
@@ -145,7 +157,7 @@ public class ChessMatch {
 	
 	//17.2.3
 		private Color opponent(Color color) {
-			return (color == color.white) ? Color.black : Color.white;
+			return (color == Color.white) ? Color.black : Color.white;
 		}
 		
 		private ChessPiece King(Color color) {
@@ -169,6 +181,34 @@ public class ChessMatch {
 				}
 			}
 			return false;
+		
+		}
+		
+	//18.1.2
+		private boolean testCheckMate(Color color) {
+			if(!testCheck(color)) {
+				return false;
+			}
+			List<Piece> list = piecesOnTheBoard.stream().filter(x->((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
+			for(Piece p : list) {
+				boolean[][] mat = p.possibleMoves();
+				for (int i=0; i<board.getRows(); i++) {
+					for(int j=0; j<board.getColumns(); j++) {
+						if (mat[i][j]) {
+							Position source = ((ChessPiece)p).getChessPosition().toposition();
+							Position target = new Position (i, j);
+							Piece capturedPiece = makeMove(source, target);
+							boolean testCheck = testCheck(color);
+							UndoMove(source, target, capturedPiece);
+							if (!testCheck) {
+								return false;
+							}
+							
+						}
+					}
+				}
+			}
+			return true;
 		}
 		
 	//7.3 metodo recebe as coordenadas do xadrez
@@ -180,7 +220,17 @@ public class ChessMatch {
 	
 	//7.3 e 8.1.3 metodo responsavel por iniciar a partida de xadrez; lugar onde coloca as peças
 	private void initialSetup( ) {
-	        placeNewPiece('c', 1, new Rook(board, Color.white));
+		
+		//18.1.1 colocar posições em check
+		placeNewPiece('h', 7, new Rook(board, Color.white));
+        placeNewPiece('d', 1, new Rook(board, Color.white));
+        placeNewPiece('e', 1, new Rook(board, Color.white));
+        
+        placeNewPiece('b', 8, new Rook(board, Color.black));
+        placeNewPiece('a', 8, new Rook(board, Color.black));
+		
+		
+	       /* placeNewPiece('c', 1, new Rook(board, Color.white));
 	        placeNewPiece('c', 2, new Rook(board, Color.white));
 	        placeNewPiece('d', 2, new Rook(board, Color.white));
 	        placeNewPiece('e', 2, new Rook(board, Color.white));
@@ -192,7 +242,7 @@ public class ChessMatch {
 	        placeNewPiece('d', 7, new Rook(board, Color.black));
 	        placeNewPiece('e', 7, new Rook(board, Color.black));
 	        placeNewPiece('e', 8, new Rook(board, Color.black));
-	        placeNewPiece('d', 8, new King(board, Color.black));
+	        placeNewPiece('d', 8, new King(board, Color.black));  */
 	      
 		}
 	}
