@@ -18,6 +18,11 @@ public abstract class ChessPiece extends Piece { //chess piece è uma peça
 	public Color getColor() { //não gerado set para cor não ser alterada
 		return color;
 	}
+	
+	//17.1
+	public ChessPosition getChessPosition() {
+		return ChessPosition.fromPosition(position);
+	}
 
 //12.1 se existe uma peça adversaria na posição
 	protected boolean isThereOpponentPiece(Position position) {

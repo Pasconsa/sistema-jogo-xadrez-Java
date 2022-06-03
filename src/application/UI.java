@@ -78,6 +78,9 @@ public class UI {
 		System.out.println();
 		System.out.println("Turn : " + chessMatch.getTurn());
 		System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+		if (chessMatch.getCheck()) {
+			System.out.println("CHECK!");   //17.2.6
+		}
 	}
 	
 //13.2.2 recebe as matrizes de movimentos possiveis
