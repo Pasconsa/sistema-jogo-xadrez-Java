@@ -133,6 +133,24 @@ public class ChessMatch {
 			capturedPieces.add(capturedPiece);
 		}
 		
+	//24.4 make move castling king	
+		if (p instanceof King && target.getColumn() == source.getColumn() + 2) {
+			Position sourceT = new Position(source.getRow(), source.getColumn() + 3);
+			Position targetT = new Position(source.getRow(), source.getColumn() + 1);
+			ChessPiece rook = (ChessPiece)board.removePiece(sourceT);
+			board.placePiece(rook, targetT);
+			rook.increaseMoveCount();
+		}
+
+		//24.5 #specialmove castling queenside rook
+		if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
+			Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
+			Position targetT = new Position(source.getRow(), source.getColumn() - 1);
+			ChessPiece rook = (ChessPiece)board.removePiece(sourceT);
+			board.placePiece(rook, targetT);
+			rook.increaseMoveCount();
+		}		
+		
 		return capturedPiece;
 	}
 	
@@ -148,6 +166,24 @@ public class ChessMatch {
 			capturedPieces.remove(capturedPiece);
 			piecesOnTheBoard.add(capturedPiece);
 		}
+		
+		//24.6 make move castling king	inverso
+				if (p instanceof King && target.getColumn() == source.getColumn() + 2) {
+					Position sourceT = new Position(source.getRow(), source.getColumn() + 3);
+					Position targetT = new Position(source.getRow(), source.getColumn() + 1);
+					ChessPiece rook = (ChessPiece)board.removePiece(targetT);
+					board.placePiece(rook, sourceT);
+					rook.decreaseMoveCount();
+				}
+
+		//24.7 #specialmove castling queenside rook inverso
+				if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
+					Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
+					Position targetT = new Position(source.getRow(), source.getColumn() - 1);
+					ChessPiece rook = (ChessPiece)board.removePiece(targetT);
+					board.placePiece(rook, sourceT);
+					rook.decreaseMoveCount();
+				}		
 	}
 	
 	//12.3 se para peça de origem a posição de destino nao é possivel nã posso mexer
@@ -240,7 +276,7 @@ public class ChessMatch {
         placeNewPiece('e', 1, new King(board, Color.white, this));
         placeNewPiece('f', 1, new Bishop(board, Color.white));
         placeNewPiece('g', 1, new Knight(board, Color.white));
-        placeNewPiece('h', 1, new Pawn(board, Color.white));
+        placeNewPiece('h', 1, new Rook(board, Color.white));
         placeNewPiece('a', 2, new Pawn(board, Color.white));
         placeNewPiece('b', 2, new Pawn(board, Color.white));
         placeNewPiece('c', 2, new Pawn(board, Color.white));
