@@ -25,6 +25,7 @@ public class ChessMatch {
 	private boolean check;  //17.2.2
 	private boolean checkMate; //18.1.1
 	private ChessPiece enPassantVulnerable; //25.1.1
+	private ChessPiece promoted; //26.1
 	
 //16.4.1
 	private List <Piece> piecesOnTheBoard = new ArrayList<>();
@@ -58,6 +59,9 @@ public class ChessMatch {
 		return enPassantVulnerable;
 	}
 	
+	public ChessPiece getPromoted() {
+		return promoted;
+	}
 
 	public ChessPiece[][] getPieces(){  //retorna uma matriz de peças de xadrez corresponde essa partida
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()]; //quantidade de linha e colunas do tabuleiro
@@ -95,6 +99,16 @@ public class ChessMatch {
 	//25.1.2	
 		ChessPiece movedPiece = (ChessPiece)board.piece(target);
 		
+	//26.2.1 specialmove promotion
+		promoted = null;
+		if (movedPiece instanceof Pawn) {
+			if ((movedPiece.getColor() == Color.white && target.getRow() == 0) || (movedPiece.getColor() == Color.black && target.getRow() == 7)) {
+				promoted = (ChessPiece)board.piece(target);
+				promoted = replacePromotedPiece("Q");
+			}
+		}
+		
+		
 		check = (testCheck(opponent(currentPlayer))) ? true : false ;
 	//18.1.3	
 		if(testCheckMate(opponent(currentPlayer))) {
@@ -113,8 +127,34 @@ public class ChessMatch {
 		}
 		
 		return (ChessPiece)capturedPiece;
-		
 	}
+	public ChessPiece replacePromotedPiece(String type) {
+		if (promoted == null) {
+			throw new IllegalStateException("There is no piece to be promoted");
+		}
+		if (!type.equals("B") && !type.equals("N") && !type.equals("R") & !type.equals("Q")) {
+			return promoted;
+		}
+		
+		Position pos = promoted.getChessPosition().toposition();
+		Piece p = board.removePiece(pos);
+		piecesOnTheBoard.remove(p);
+		
+		ChessPiece newPiece = newPiece(type, promoted.getColor());
+		board.placePiece(newPiece, pos);
+		piecesOnTheBoard.add(newPiece);
+		
+		return newPiece;
+	}
+	
+	private ChessPiece newPiece(String type, Color color) {
+		if (type.equals("B")) return new Bishop(board, color);
+		if (type.equals("N")) return new Knight(board, color);
+		if (type.equals("Q")) return new Queen(board, color);
+		return new Rook(board, color);
+	}
+		
+	
 	
 	//9.3.2 Implemetar validateSourcePosition ; senão existir uma peça na posição de origem
 	private void validateSourcePosition(Position position) {
